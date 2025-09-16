@@ -93,8 +93,29 @@ status() {
     fi
 }
 
-# Quick connect (even simpler)
-quick_connect() {
-    log "Quick connecting to VPN Gate..."
-    
-    # Download a random working config
+# Show help
+show_help() {
+    echo "VPN Gate OpenVPN Auto-Connect"
+    echo "Usage: $0 {connect|disconnect|status}"
+    echo ""
+    echo "  connect     - Find and connect to best server"
+    echo "  disconnect  - Disconnect from VPN"
+    echo "  status      - Check connection status"
+}
+
+# Main argument handler
+case "$1" in
+    connect)
+        disconnect 2>/dev/null
+        get_and_connect
+        ;;
+    disconnect)
+        disconnect
+        ;;
+    status)
+        status
+        ;;
+    *)
+        show_help
+        ;;
+esac
